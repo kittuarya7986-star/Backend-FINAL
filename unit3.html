@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BCA Semester 3 Web Technology Portal</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="header-container">
+      <h1>BCA Semester 3: Web Technologies & PHP/MySQL</h1>
+      <p>KANISHKA</p>
+    </div>
+  </header>
+  <nav>
+    <div class="nav-container">
+      <a href="index.html">Home</a>
+<a href="unit1.html">Unit I: Introduction to Internet Technologies</a>
+<a href="unit2.html" >Unit II: PHP & String Handling</a>
+<a href="unit3.html" class="active" >Unit III: Handling HTML Form with PHP</a>
+<a href="unit4.html">Unit IV: Database Connectivity with MySQL
+</a>
+
+    </div>
+  </nav>
+  <main>
+
+    <div class="card">
+      <span class="badge">Unit III</span>
+      <h2>Handling HTML Form with PHP</h2>
+      <p>Web forms collect user input on the browser interface and dispatch it to backend server scripts for processing, validation, and storage.</p>
+
+      <h3>1. Form Submission: GET vs. POST Method</h3>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>GET Method</th>
+              <th>POST Method</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Data Transmission</strong></td>
+              <td>Appends key-value pairs to the URL query string (<code>?key=value</code>).</td>
+              <td>Encapsulated in the HTTP request body payload.</td>
+            </tr>
+            <tr>
+              <td><strong>Security & Visibility</strong></td>
+              <td>Data is visible in the browser address bar and web logs. Never use for passwords.</td>
+              <td>Data is not exposed in the browser address bar.</td>
+            </tr>
+            <tr>
+              <td><strong>Data Volume Limits</strong></td>
+              <td>Restricted by URL length constraints (~2048 characters).</td>
+              <td>Supports large payloads, file attachments (multipart data).</td>
+            </tr>
+            <tr>
+              <td><strong>Browser Caching</strong></td>
+              <td>Can be bookmarked, cached, and reloaded safely (idempotent).</td>
+              <td>Cannot be safely bookmarked; re-submitting requests confirmation.</td>
+            </tr>
+            <tr>
+              <td><strong>PHP Superglobal</strong></td>
+              <td><code>$_GET</code></td>
+              <td><code>$_POST</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>2. Complete Server-Side Form Handling & Validation Script</h3>
+      <p>Robust applications must never trust client-supplied input. Server-side validation inspects empty fields, formatting regex, and escapes outputs against Cross-Site Scripting (XSS).</p>
+      
+      <pre><code>&lt;?php
+// Form processing script: process_form.php
+$name = $email = $course = "";
+$errors = [];
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    // 1. Validate and sanitize Name
+    if (empty($_POST["name"])) {
+        $errors['name'] = "Full name is required.";
+    } else {
+        $name = trim($_POST["name"]);
+        if (!preg_match("/^[a-zA-Z-' ]*$/", $name)) {
+            $errors['name'] = "Only letters and spaces are allowed.";
+        }
+    }
+
+    // 2. Validate and sanitize Email
+    if (empty($_POST["email"])) {
+        $errors['email'] = "Email address is required.";
+    } else {
+        $email = trim($_POST["email"]);
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $errors['email'] = "Invalid email format.";
+        }
+    }
+
+    // 3. Process if clean
+    if (empty($errors)) {
+        // Safe to proceed to database layer
+        $safeName = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
+        echo "Registration Successful for " . $safeName;
+    }
+}
+?&gt;</code></pre>
+
+      <h3>3. Interactive Client-Side Preview Form</h3>
+      <p>Test the UI and validation logic below:</p>
+      <form class="demo-form" onsubmit="return handleMockValidation(event)">
+        <div class="form-group">
+          <label for="txtName">Student Full Name</label>
+          <input type="text" id="txtName" class="form-control" placeholder="e.g. John Doe">
+          <div id="errName" class="error-text">Please enter a valid alphabet name.</div>
+        </div>
+        <div class="form-group">
+          <label for="txtEmail">Institutional Email</label>
+          <input type="text" id="txtEmail" class="form-control" placeholder="e.g. student@college.edu">
+          <div id="errEmail" class="error-text">Please enter a valid email address.</div>
+        </div>
+        <div class="form-group">
+          <label for="selCourse">Semester</label>
+          <select id="selCourse" class="form-control">
+            <option value="Sem3">Semester III</option>
+            <option value="Sem4">Semester IV</option>
+          </select>
+        </div>
+        <button type="submit" class="btn">Submit for Validation</button>
+        <div id="successMsg" style="display:none; color:#15803d; font-weight:600; margin-top:0.75rem;">
+          Input passed client validation! Dispatched to server endpoint.
+        </div>
+      </form>
+    </div>
+
+    <script>
+      function handleMockValidation(e) {
+        e.preventDefault();
+        const name = document.getElementById('txtName').value.trim();
+        const email = document.getElementById('txtEmail').value.trim();
+        let valid = true;
+
+        if (!name || !/^[A-Za-z\s]+$/.test(name)) {
+          document.getElementById('errName').style.display = 'block';
+          valid = false;
+        } else {
+          document.getElementById('errName').style.display = 'none';
+        }
+
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!email || !emailPattern.test(email)) {
+          document.getElementById('errEmail').style.display = 'block';
+          valid = false;
+        } else {
+          document.getElementById('errEmail').style.display = 'none';
+        }
+
+        if (valid) {
+          document.getElementById('successMsg').style.display = 'block';
+        } else {
+          document.getElementById('successMsg').style.display = 'none';
+        }
+        return false;
+      }
+    </script>
+
+  </main>
+  <footer>
+    <p>BCA Semester III • Web Technologies & Application Development •</p>
+  </footer>
+</body>
+</html>

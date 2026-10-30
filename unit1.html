@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BCA Semester 3 Web Technology Portal</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="header-container">
+      <h1>BCA Semester 3: Web Technologies & PHP/MySQL</h1>
+      <p>KANISHKA</p>
+    </div>
+  </header>
+  <nav>
+    <div class="nav-container">
+      <a href="index.html">Home</a>
+<a href="unit1.html"  class="active" >Unit I: Introduction to Internet Technologies</a>
+<a href="unit2.html">Unit II: PHP & String Handling</a>
+<a href="unit3.html">Unit III: Handling HTML Form with PHP</a>
+<a href="unit4.html">Unit IV: Database Connectivity with MySQL</a>
+
+    </div>
+  </nav>
+  <main>
+
+    <div class="card">
+      <span class="badge">Unit I</span>
+      <h2>Introduction to Internet Technologies</h2>
+      <p>Internet technologies encompass the collection of standards, hardware systems, and software protocols that facilitate global computing interconnections and information exchange.</p>
+
+      <h3>1. The TCP/IP Protocol Suite</h3>
+      <p>The Transmission Control Protocol/Internet Protocol (TCP/IP) model forms the bedrock of internet communications, organized across four functional layers:</p>
+      <ul>
+        <li><strong>Application Layer:</strong> Interfaces directly with end-user software (e.g., HTTP, HTTPS, FTP, DNS, SMTP).</li>
+        <li><strong>Transport Layer:</strong> Establishes host-to-host data transfer. <em>TCP</em> provides connection-oriented, reliable, sequenced transmission with flow/congestion control, whereas <em>UDP</em> provides lightweight, connectionless datagram delivery.</li>
+        <li><strong>Internet Layer:</strong> Manages logical addressing and packet routing across networks using IPv4 and IPv6.</li>
+        <li><strong>Link Layer (Network Access):</strong> Deals with physical hardware addresses (MAC), ethernet frames, and data transmission over physical media.</li>
+      </ul>
+
+      <h3>2. Hypertext Transfer Protocol (HTTP / HTTPS)</h3>
+      <p>HTTP is a stateless, application-level request-response protocol operating over TCP port 80 (or port 443 with TLS encryption in HTTPS).</p>
+      <div class="grid-2">
+        <div class="grid-box">
+          <h4>HTTP Request Structure</h4>
+          <ul>
+            <li><strong>Request Line:</strong> Method (<code>GET</code>, <code>POST</code>, etc.), URI, and HTTP Version.</li>
+            <li><strong>Headers:</strong> Metadata like <code>Host</code>, <code>User-Agent</code>, <code>Accept</code>, <code>Authorization</code>.</li>
+            <li><strong>Body:</strong> Payload data (applicable in POST/PUT requests).</li>
+          </ul>
+        </div>
+        <div class="grid-box">
+          <h4>HTTP Status Codes</h4>
+          <ul>
+            <li><code>200 OK</code>: Request succeeded.</li>
+            <li><code>301 / 302</code>: Permanent or temporary redirection.</li>
+            <li><code>400 Bad Request</code>: Malformed client syntax.</li>
+            <li><code>404 Not Found</code>: Resource does not exist.</li>
+            <li><code>500 Internal Server Error</code>: Unhandled server failure.</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>3. Domain Name System (DNS) Mechanics</h3>
+      <p>DNS translates human-readable hostnames (e.g., <code>portal.university.edu</code>) into routable IP addresses (e.g., <code>192.0.2.1</code>). The resolution workflow progresses hierarchically:</p>
+      <ol>
+        <li>Local browser cache & OS resolver query.</li>
+        <li>Recursive DNS Resolver (ISP or enterprise resolver).</li>
+        <li>Root Nameserver (directs to TLD server like <code>.edu</code>).</li>
+        <li>Top-Level Domain (TLD) Nameserver (directs to authoritative name server).</li>
+        <li>Authoritative Nameserver (returns matching A/AAAA IP record).</li>
+      </ol>
+
+      <h3>4. Client-Side vs. Server-Side Scripting</h3>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Criteria</th>
+              <th>Client-Side Scripting (e.g., JavaScript)</th>
+              <th>Server-Side Scripting (e.g., PHP)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Execution Context</strong></td>
+              <td>Client web browser (Chrome, Firefox, Safari).</td>
+              <td>Web server runtime (Apache/PHP-FPM engine).</td>
+            </tr>
+            <tr>
+              <td><strong>Source Code Visibility</strong></td>
+              <td>Viewable by inspecting page source or DevTools.</td>
+              <td>Hidden from user; browser only receives emitted HTML/JSON.</td>
+            </tr>
+            <tr>
+              <td><strong>Primary Purpose</strong></td>
+              <td>UI dynamism, DOM manipulation, client-side validation.</td>
+              <td>Business logic, database interaction, session auth.</td>
+            </tr>
+            <tr>
+              <td><strong>Database Access</strong></td>
+              <td>Cannot safely connect directly to backend databases.</td>
+              <td>Direct, credentialed connectivity to SQL/NoSQL storage.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+  <footer>
+    <p>BCA Semester III • Web Technologies & Application Development • </p>
+  </footer>
+</body>
+</html>

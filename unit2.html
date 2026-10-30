@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BCA Semester 3 Web Technology Portal</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="header-container">
+      <h1>BCA Semester 3: Web Technologies & PHP/MySQL</h1>
+      <p>KANISHKA</p>
+    </div>
+  </header>
+  <nav>
+    <div class="nav-container">
+      <a href="index.html">Home</a>
+<a href="unit1.html">Unit I: Introduction to Internet Technologies</a>
+<a href="unit2.html" class="active"> Unit II: PHP & String Handling</a>
+<a href="unit3.html">Unit III: Handling HTML Form with PHP</a>
+<a href="unit4.html">Unit IV: Database Connectivity with MySQL
+</a>
+
+    </div>
+  </nav>
+  <main>
+
+    <div class="card">
+      <span class="badge">Unit II</span>
+      <h2>PHP Syntax, Variables, Control Structures & Functions</h2>
+      <p>PHP (Hypertext Preprocessor) is an open-source, interpreted server-side scripting language dynamically embedded into HTML or executed as backend APIs.</p>
+
+      <h3>1. Syntax, Variable Declaration & Data Types</h3>
+      <p>PHP scripts start with <code>&lt;?php</code> and end with <code>?&gt;</code>. All variables are declared with a leading dollar sign (<code>$</code>) and follow dynamic typing.</p>
+      <pre><code>&lt;?php
+// Data types in PHP
+$studentName = "Kanishka Sharma";  // String
+$semester    = 3;                  // Integer
+$gpa         = 3.88;               // Float
+$isEnrolled  = true;               // Boolean
+$subjects    = ["C", "PHP", "DBMS"];// Indexed Array
+
+echo "Student: $studentName | Semester: $semester";
+?&gt;</code></pre>
+
+      <h3>2. Operators & Decision Making</h3>
+      <p>PHP supports arithmetic, assignment, comparison (including strict identity <code>===</code> vs equal <code>==</code>), and logical operators.</p>
+      <pre><code>&lt;?php
+$score = 82;
+
+if ($score >= 90) {
+    $grade = "A+";
+} elseif ($score >= 75) {
+    $grade = "A";
+} elseif ($score >= 60) {
+    $grade = "B";
+} else {
+    $grade = "Pass";
+}
+
+// Switch-case construct
+switch ($grade) {
+    case "A+":
+    case "A":
+        echo "Distinction Performance";
+        break;
+    default:
+        echo "Satisfactory Performance";
+        break;
+}
+?&gt;</code></pre>
+
+      <h3>3. Looping Constructs</h3>
+      <p>Standard iterative structures include <code>for</code>, <code>while</code>, <code>do-while</code>, and the associative array traversal loop <code>foreach</code>.</p>
+      <pre><code>&lt;?php
+$courseUnits = [
+    "Unit 1" => "Internet Technologies",
+    "Unit 2" => "PHP Core",
+    "Unit 3" => "Forms & Validation",
+    "Unit 4" => "MySQL Integration"
+];
+
+foreach ($courseUnits as $unitKey => $unitTitle) {
+    echo "$unitKey: $unitTitle\n";
+}
+?&gt;</code></pre>
+
+      <h3>4. Essential Built-in String Functions</h3>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Function</th>
+              <th>Description</th>
+              <th>Example Usage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>strlen($str)</code></td>
+              <td>Returns length of string</td>
+              <td><code>strlen("BCA")</code> &rarr; <code>3</code></td>
+            </tr>
+            <tr>
+              <td><code>strtoupper($str)</code> / <code>strtolower($str)</code></td>
+              <td>Case transformations</td>
+              <td><code>strtoupper("php")</code> &rarr; <code>"PHP"</code></td>
+            </tr>
+            <tr>
+              <td><code>strpos($haystack, $needle)</code></td>
+              <td>Finds offset of first occurrence</td>
+              <td><code>strpos("BCA Semester 3", "Semester")</code> &rarr; <code>4</code></td>
+            </tr>
+            <tr>
+              <td><code>substr($str, $start, $len)</code></td>
+              <td>Returns segment of string</td>
+              <td><code>substr("Database", 0, 4)</code> &rarr; <code>"Data"</code></td>
+            </tr>
+            <tr>
+              <td><code>trim($str)</code></td>
+              <td>Strips whitespace / control characters</td>
+              <td><code>trim("  valid input  ")</code> &rarr; <code>"valid input"</code></td>
+            </tr>
+            <tr>
+              <td><code>htmlspecialchars($str)</code></td>
+              <td>Converts special characters to HTML entities</td>
+              <td>Prevents XSS attacks in dynamic outputs</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+  <footer>
+    <p>BCA Semester III • Web Technologies & Application Development • </p>
+  </footer>
+</body>
+</html>

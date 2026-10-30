@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BCA Semester 3 Web Technology Portal</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="header-container">
+      <h1>BCA Semester 3: Web Technologies & PHP/MySQL</h1>
+      <p>KANISHKA</p>
+    </div>
+  </header>
+  <nav>
+    <div class="nav-container">
+      <a href="index.html">Home</a>
+<a href="unit1.html">Unit I: Introduction to Internet Technologies</a>
+<a href="unit2.html" >Unit II: PHP & String Handling</a>
+<a href="unit3.html">Unit III: Handling HTML Form with PHP</a>
+<a href="unit4.html" class="active" >Unit IV: Database Connectivity with MySQL
+</a>
+    </div>
+  </nav>
+  <main>
+
+    <div class="card">
+      <span class="badge">Unit IV</span>
+      <h2>Database Connectivity with MySQL</h2>
+      <p>Relational Database Management Systems (RDBMS) like MySQL persist dynamic application states. PHP interfaces with MySQL natively via <code>mysqli</code> or PDO (PHP Data Objects).</p>
+
+      <h3>1. Database Schema & Table Creation (DDL)</h3>
+      <p>SQL script to initialize an academic student registry database:</p>
+      <pre><code>-- Create Database
+CREATE DATABASE IF NOT EXISTS bca_academic_db;
+USE bca_academic_db;
+
+-- Create Students Table
+CREATE TABLE IF NOT EXISTS students (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    roll_number VARCHAR(20) NOT NULL UNIQUE,
+    full_name VARCHAR(100) NOT NULL,
+    email VARCHAR(120) NOT NULL UNIQUE,
+    semester INT NOT NULL DEFAULT 3,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;</code></pre>
+
+      <h3>2. PHP Database Connection Script (db_connect.php)</h3>
+      <p>Using modern object-oriented <code>mysqli</code> with strict exception handling:</p>
+      <pre><code>&lt;?php
+$host     = "localhost";
+$username = "root";
+$password = "";
+$dbname   = "bca_academic_db";
+
+// Enable strict MySQLi error reporting
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+
+try {
+    $conn = new mysqli($host, $username, $password, $dbname);
+    $conn->set_charset("utf8mb4");
+} catch (mysqli_sql_exception $e) {
+    // Log exception details securely and display friendly message
+    error_log($e->getMessage());
+    die("Database Connection Failure: Unable to establish server handshake.");
+}
+?&gt;</code></pre>
+
+      <h3>3. Prepared Statements for Data Insertion (Preventing SQLi)</h3>
+      <p>Directly concatenating user input into SQL queries enables SQL Injection. Prepared statements parameterize inputs safely.</p>
+      <pre><code>&lt;?php
+require_once "db_connect.php";
+
+$rollNo = "BCA2601";
+$name   = "Ishaan Verma";
+$email  = "ishaan.v@example.edu";
+$sem    = 3;
+
+// 1. Prepare template
+$stmt = $conn->prepare("INSERT INTO students (roll_number, full_name, email, semester) VALUES (?, ?, ?, ?)");
+
+// 2. Bind parameters ('sssi' = string, string, string, integer)
+$stmt->bind_param("sssi", $rollNo, $name, $email, $sem);
+
+// 3. Execute
+if ($stmt->execute()) {
+    echo "Record inserted successfully with ID: " . $stmt->insert_id;
+} else {
+    echo "Execution failed: " . $stmt->error;
+}
+
+$stmt->close();
+?&gt;</code></pre>
+
+      <h3>4. Data Retrieval & Result Rendering (SELECT Query)</h3>
+      <p>Querying persistent records and rendering safely in an HTML structure:</p>
+      <pre><code>&lt;?php
+require_once "db_connect.php";
+
+$sql = "SELECT id, roll_number, full_name, email, semester FROM students ORDER BY id DESC";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    echo "&lt;table border='1'&gt;";
+    echo "&lt;tr&gt;&lt;th&gt;ID&lt;/th&gt;&lt;th&gt;Roll No&lt;/th&gt;&lt;th&gt;Name&lt;/th&gt;&lt;th&gt;Email&lt;/th&gt;&lt;th&gt;Semester&lt;/th&gt;&lt;/tr&gt;";
+    
+    while ($row = $result->fetch_assoc()) {
+        echo "&lt;tr&gt;";
+        echo "&lt;td&gt;" . htmlspecialchars($row['id']) . "&lt;/td&gt;";
+        echo "&lt;td&gt;" . htmlspecialchars($row['roll_number']) . "&lt;/td&gt;";
+        echo "&lt;td&gt;" . htmlspecialchars($row['full_name']) . "&lt;/td&gt;";
+        echo "&lt;td&gt;" . htmlspecialchars($row['email']) . "&lt;/td&gt;";
+        echo "&lt;td&gt;" . htmlspecialchars($row['semester']) . "&lt;/td&gt;";
+        echo "&lt;/tr&gt;";
+    }
+    echo "&lt;/table&gt;";
+} else {
+    echo "No student records found.";
+}
+
+$conn->close();
+?&gt;</code></pre>
+    </div>
+
+  </main>
+  <footer>
+    <p>BCA Semester III • Web Technologies & Application Development •</p>
+  </footer>
+</body>
+</html>
